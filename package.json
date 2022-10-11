@@ -1,0 +1,21 @@
+{
+  "name": "vite-plugin-mixin-code",
+  "version": "1.0.2",
+  "description": "",
+  "main": "dist/index.js",
+  "homepage": "https://gitee.com/ryfn-lip/vite-plugin-mixin-code.git",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">= 10.13.0"
+  },
+  "dependencies": {
+    "lodash-es": "^4.17.21",
+    "magic-string": "^0.26.4",
+    "micromatch": "^4.0.5"
+  }
+}
