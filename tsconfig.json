@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        // "target": "esnext",
+        // "module": "esnext",
+        // "outDir": "./mjs",
+        "target": "esnext",
+        "module": "CommonJS",
+        "outDir": "./cjs",
+        "useDefineForClassFields": true,
+        "moduleResolution": "node",
+        "strict": true, 
+    },
+    "include": ["**/*.ts", "**/*.d.ts"],
+    "exclude": ["node_modules","**/*.js"]
+}
