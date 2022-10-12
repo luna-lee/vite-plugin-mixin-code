@@ -55,8 +55,7 @@ function mixinCodePlugin(options) {
             var str = function () { return s || (s = new magic_string_1["default"](code)); };
             var descriptor = (0, compiler_sfc_1.parse)(code).descriptor;
             if (descriptor.script) {
-                var regx = /export\s+default\s*(defineComponent\s*\()?\s*{/;
-                if (regx.test(code)) {
+                if (/export\s+default\s*/.test(code)) {
                     if (method == 'mixin') {
                         var mixinsRegx = /mixins\s*:\s*\[/gms;
                         if (mixinsRegx.test(code)) {
@@ -66,26 +65,28 @@ function mixinCodePlugin(options) {
                             });
                         }
                         else {
-                            str().replace(regx, function (match) {
+                            str().replace(/(export\s+default\s*)((?!{).)*{/gms, function (match) {
                                 return "\n                                        " + match + "\n mixins:[\n                                        " + mixinCode + "\n                                     ],\n                                 ";
                             });
                         }
                     }
                     else {
-                        var result = (0, compiler_sfc_1.compileScript)(descriptor, { id: id });
-                        var s_1 = result.content
-                            .replace(/(?<=(export\s+default\s*)).*}/gms, function (match) {
+                        var result_1 = (0, compiler_sfc_1.compileScript)(descriptor, { id: id });
+                        var s_1 = result_1.content
+                            .replace(/(?<=(export\s+default\s*)).*(}|\))/gms, function (match) {
                             if (/defineComponent\(/.test(match))
-                                return match.replace(/(?<=(defineComponent\s*\()).*}/gms, function (m) {
-                                    return "mergeObject(" + m + ", " + mixinCode + ")";
+                                return match.replace(/(?<=(defineComponent\s*\()).*(?=\))/gms, function (m) {
+                                    return "VitePluginMixinCodeMergeObject(" + m + ", " + mixinCode + ")";
                                 });
                             else
-                                return "\n                                        mergeObject(" + match + ", " + mixinCode + ")\n                                    ";
+                                return "\n                                    VitePluginMixinCodeMergeObject(" + match + ", " + mixinCode + ")\n                                    ";
                         })
                             .replace(/export\s+default.*}/gms, function (match) {
-                            return "\n                                import { mergeObject } from '" + __dirname + "/lib';\n\n                                " + match + "\n                                ";
+                            if (/VitePluginMixinCodeMergeObject/.test(result_1.content))
+                                return match;
+                            return "\n                                import { mergeObject as VitePluginMixinCodeMergeObject  } from '" + __dirname + "/lib';\n\n                                " + match + "\n                                ";
                         });
-                        str().replace(result.content, s_1);
+                        str().replace(result_1.content, s_1);
                     }
                     return {
                         map: str().generateMap(),

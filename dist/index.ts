@@ -45,8 +45,7 @@ export default function mixinCodePlugin(options: ExtendOptions = {}): Plugin {
             const str = () => s || (s = new MagicString(code));
             const { descriptor } = parse(code);
             if (descriptor.script) {
-                const regx = /export\s+default\s*(defineComponent\s*\()?\s*{/;
-                if (regx.test(code)) {
+                if (/export\s+default\s*/.test(code)) {
                     if (method == 'mixin') {
                         const mixinsRegx = /mixins\s*:\s*\[/gms;
                         if (mixinsRegx.test(code)) {
@@ -57,7 +56,7 @@ export default function mixinCodePlugin(options: ExtendOptions = {}): Plugin {
                             ])`;
                             });
                         } else {
-                            str().replace(regx, (match) => {
+                            str().replace(/(export\s+default\s*)((?!{).)*{/gms, (match) => {
                                 return `
                                         ${match}\n mixins:[
                                         ${mixinCode}
@@ -68,19 +67,20 @@ export default function mixinCodePlugin(options: ExtendOptions = {}): Plugin {
                     } else {
                         const result = compileScript(descriptor, { id });
                         const s = result.content
-                            .replace(/(?<=(export\s+default\s*)).*}/gms, (match) => {
+                            .replace(/(?<=(export\s+default\s*)).*(}|\))/gms, (match) => {
                                 if (/defineComponent\(/.test(match))
-                                    return match.replace(/(?<=(defineComponent\s*\()).*}/gms, (m) => {
-                                        return `mergeObject(${m}, ${mixinCode})`;
+                                    return match.replace(/(?<=(defineComponent\s*\()).*(?=\))/gms, (m) => {
+                                        return `VitePluginMixinCodeMergeObject(${m}, ${mixinCode})`;
                                     });
                                 else
                                     return `
-                                        mergeObject(${match}, ${mixinCode})
+                                    VitePluginMixinCodeMergeObject(${match}, ${mixinCode})
                                     `;
                             })
                             .replace(/export\s+default.*}/gms, (match) => {
+                                if (/VitePluginMixinCodeMergeObject/.test(result.content)) return match;
                                 return `
-                                import { mergeObject } from '${__dirname}/lib';\n
+                                import { mergeObject as VitePluginMixinCodeMergeObject  } from '${__dirname}/lib';\n
                                 ${match}
                                 `;
                             });
