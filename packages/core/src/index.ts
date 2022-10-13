@@ -161,7 +161,7 @@ export default function mixinCodePlugin(
                 return match;
               if (/VitePluginMixinCodeMergeObject/gms.test(match))
                 return `
-                                import { mergeObject as VitePluginMixinCodeMergeObject  } from '${__dirname}/lib';\n
+                                import { mergeObject as VitePluginMixinCodeMergeObject  } from '${__dirname}/lib/index';\n
                                 ${match}
                             `;
               return match;
@@ -175,7 +175,6 @@ export default function mixinCodePlugin(
             0,
             `<script ${lang ? `lang="${lang}"` : ""}>
                         import { defineComponent } from 'vue'
-                        import { mergeObject as VitePluginMixinCodeMergeObject  } from '${__dirname}/lib';\n
                         export default defineComponent({
                             mixins:[
                                 ${mixinCode}
@@ -189,7 +188,6 @@ export default function mixinCodePlugin(
             0,
             `<script ${lang ? `lang="${lang}"` : ""}>
                         import { defineComponent } from 'vue'
-                        import { mergeObject as VitePluginMixinCodeMergeObject  } from '${__dirname}/lib';\n
                         export default defineComponent(
                             ${mixinCode}
                         )
@@ -211,7 +209,7 @@ export default function mixinCodePlugin(
                 return match;
               if (/VitePluginMixinCodeMergeObject/gms.test(match))
                 return `
-                            import { mergeObject as VitePluginMixinCodeMergeObject  } from '${__dirname}/lib';\n
+                            import { mergeObject as VitePluginMixinCodeMergeObject  } from '${__dirname}/lib/index';\n
                             ${match}
                         `;
               return match;
