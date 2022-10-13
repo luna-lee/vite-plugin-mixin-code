@@ -1,15 +1,19 @@
 {
     "compilerOptions": {
-        // "target": "esnext",
-        // "module": "esnext",
-        // "outDir": "./mjs",
-        "target": "esnext",
-        "module": "CommonJS",
-        "outDir": "./cjs",
-        "useDefineForClassFields": true,
-        "moduleResolution": "node",
-        "strict": true, 
+      "module": "ESNext",
+      "target": "es2017",
+      "moduleResolution": "node",
+      "noImplicitThis": false,
+      "strict": true,
+      "declaration": true,
+      "noUnusedLocals": true,
+      "esModuleInterop": true,
+      "outDir": "dist",
+      "lib": ["ESNext"],
+      "sourceMap": false,
+      "noEmitOnError": true
     },
-    "include": ["**/*.ts", "**/*.d.ts"],
-    "exclude": ["node_modules","**/*.js"]
-}
+    "include": ["./packages"],
+    "exclude": ["**/dist", "**/node_modules", "**/test"]
+  }
+  
