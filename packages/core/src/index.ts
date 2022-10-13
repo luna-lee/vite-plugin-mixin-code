@@ -161,7 +161,7 @@ export default function mixinCodePlugin(
                 return match;
               if (/VitePluginMixinCodeMergeObject/gms.test(match))
                 return `
-                                import { mergeObject as VitePluginMixinCodeMergeObject  } from '${__dirname}/lib/index';\n
+                                import { mergeObject as VitePluginMixinCodeMergeObject  } from "vite-plugin-mixin-code/dist/lib/index";\n
                                 ${match}
                             `;
               return match;
@@ -174,12 +174,12 @@ export default function mixinCodePlugin(
           str().appendLeft(
             0,
             `<script ${lang ? `lang="${lang}"` : ""}>
-                        import { defineComponent } from 'vue'
+                        import { defineComponent } from "vue";
                         export default defineComponent({
                             mixins:[
                                 ${mixinCode}
                             ]
-                        })
+                        });
                         </script>\n
                         `
           );
@@ -187,10 +187,10 @@ export default function mixinCodePlugin(
           str().appendLeft(
             0,
             `<script ${lang ? `lang="${lang}"` : ""}>
-                        import { defineComponent } from 'vue'
+                      import { defineComponent } from "vue";
                         export default defineComponent(
                             ${mixinCode}
-                        )
+                        );
                         </script>\n
                         `
           );
@@ -209,7 +209,7 @@ export default function mixinCodePlugin(
                 return match;
               if (/VitePluginMixinCodeMergeObject/gms.test(match))
                 return `
-                            import { mergeObject as VitePluginMixinCodeMergeObject  } from '${__dirname}/lib/index';\n
+                            import { mergeObject as VitePluginMixinCodeMergeObject  } from "vite-plugin-mixin-code/dist/lib/index";\n
                             ${match}
                         `;
               return match;

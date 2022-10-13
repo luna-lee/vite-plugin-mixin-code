@@ -7,8 +7,7 @@ export default defineBuildConfig({
     {
       builder: "mkdist",
       input: "./src/lib",
-      outDir: "./dist/lib",
-      
+      outDir: "./dist/lib"
     },
   ],
   declaration: true,

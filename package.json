@@ -3,7 +3,8 @@
   "version": "1.0.4",
   "description": "",
   "scripts": {
-    "build": "pnpm --filter '*' run build"
+    "build": "pnpm --filter 'vite-plugin-mixin-code' run build",
+    "test": "vitest"
   },
   "keywords": [],
   "author": "",
@@ -13,6 +14,9 @@
   },
   "devDependencies": {
     "typescript": "^4.8.4",
-    "unbuild": "^0.6.8"
+    "unbuild": "^0.6.8",
+    "vite-plugin-mixin-code": "workspace:^1.0.6",
+    "vitest": "^0.24.1",
+    "vue": "^3.2.40"
   }
 }
