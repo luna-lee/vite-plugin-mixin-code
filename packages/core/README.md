@@ -1,4 +1,4 @@
-# vite-plugin-mixin-code
+# vite-plugin-mixin-code 
 - 实现对制定目录下的vue文件进行代码合并，
 - 功能类型全局mixin，但比mixn更强大。
 - 可以通过指定具体文件/夹和排除指定文件/夹来实现合并
