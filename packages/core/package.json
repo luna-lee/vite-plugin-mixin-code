@@ -1,11 +1,11 @@
 {
   "name": "vite-plugin-mixin-code",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
-  "homepage": "https://gitee.com/ryfn-lip/vite-plugin-mixin-code.git",
+  "homepage": "https://github.com/luna-lee/vite-plugin-mixin-code.git",
   "scripts": {
     "build": "pnpm unbuild"
   },
