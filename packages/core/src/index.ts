@@ -33,58 +33,64 @@ export default function mixinCodePlugin(
       if (!/\.vue$/.test(id)) {
         return null;
       }
+      let _mixinOptions: MixinOptionsType[] = [];
+      // 自动添加组件名，以当前文件名作为组件名，若文件名为index，则取上级文件夹名称。首字符大写
+      let componentName = "";
+      const pathArr = id.split("/");
+      if (pathArr[pathArr.length - 1] == "index.vue") {
+        componentName = pathArr[pathArr.length - 2];
+      } else {
+        componentName = pathArr[pathArr.length - 1].replace(".vue", "");
+      }
+      // 首字符大写
+      componentName =
+        componentName.charAt(0).toUpperCase() + componentName.slice(1);
+
       const projectPath = extendOptions.projectPath;
       let mixinCode = "";
       let method = extendOptions.method;
       if (Array.isArray(mixinOptions)) {
-        // 将所有符合匹配规则的，mixinCode进行合并,合并规则后替换前
-        mixinCode = mixinOptions
-          .filter((o: MixinOptionsType) => {
-            const { include = ["**/*"], exclude = [] } = o;
-
-            return micromatch.isMatch(
-              id,
-              include.map((v) =>
-                absolutePath(projectPath, v).replace(/\\/g, "/")
-              ),
-              {
-                ignore: exclude.map((v) =>
-                  absolutePath(projectPath, v).replace(/\\/g, "/")
-                ),
-              }
-            );
-          })
-          .reduce((str: string, o: MixinOptionsType): string => {
-            if (o.mixinCode) {
-              if (!str) {
-                str = o.mixinCode;
-              } else {
-                str = `VitePluginMixinCodeMergeObject(
-                                    ${str}
-                                    ,
-                                   ${o.mixinCode}
-                                    )`;
-              }
-            }
-            return str;
-          }, "");
+        _mixinOptions = [...mixinOptions];
       } else {
-        const {
-          mixinCode: _mixinCode,
-          include = ["**/*"],
-          exclude = [],
-        } = mixinOptions;
-        const fileMatch = micromatch.isMatch(
-          id,
-          include.map((v) => absolutePath(projectPath, v).replace(/\\/g, "/")),
-          {
-            ignore: exclude.map((v) =>
+        _mixinOptions = [mixinOptions];
+      }
+      // 添加组件名
+      _mixinOptions.push({
+        mixinCode: `{
+          name:'${componentName}'
+        }`,
+      });
+      // 将所有符合匹配规则的，mixinCode进行合并,合并规则后替换前
+      mixinCode = _mixinOptions
+        .filter((o: MixinOptionsType) => {
+          const { include = ["**/*"], exclude = [] } = o;
+
+          return micromatch.isMatch(
+            id,
+            include.map((v) =>
               absolutePath(projectPath, v).replace(/\\/g, "/")
             ),
+            {
+              ignore: exclude.map((v) =>
+                absolutePath(projectPath, v).replace(/\\/g, "/")
+              ),
+            }
+          );
+        })
+        .reduce((str: string, o: MixinOptionsType): string => {
+          if (o.mixinCode) {
+            if (!str) {
+              str = o.mixinCode;
+            } else {
+              str = `VitePluginMixinCodeMergeObject(
+                      ${o.mixinCode}
+                                ,
+                                ${str}
+                                )`;
+            }
           }
-        );
-        if (fileMatch) mixinCode = _mixinCode;
-      }
+          return str;
+        }, "");
       if (!mixinCode) {
         return null;
       }
@@ -135,12 +141,12 @@ export default function mixinCodePlugin(
                 return match.replace(
                   /(?<=(defineComponent\s*\()).*(?=\))/gms,
                   (m) => {
-                    return `VitePluginMixinCodeMergeObject(${m}, ${mixinCode})`;
+                    return `VitePluginMixinCodeMergeObject( ${mixinCode},${m})`;
                   }
                 );
               else
                 return `
-                                    VitePluginMixinCodeMergeObject(${match}, ${mixinCode})
+                                    VitePluginMixinCodeMergeObject(${mixinCode},${match})
                                     `;
             }
           );
