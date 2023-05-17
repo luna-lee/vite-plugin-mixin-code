@@ -1,14 +1,15 @@
 # vite-plugin-mixin-code
 
-- 实现对制定目录下的 vue 文件进行代码合并，
-- 功能类似全局 mixin，但比 mixn 更强大。
-- 可以通过指定具体文件/夹和排除指定文件/夹来实现合并
-- 合并规则：以现有组件对象为主，并入的对象为辅， 相同函数合并成一个，并入的函数先执行。函数有返回值:若为对象则合并，结果都以组件内的函数结果为主
-- 支持多个不同匹配规则的插入
-- 文件筛选匹配格式 参考[micromatch](https://github.com/micromatch/micromatch)
-- 自动添加组件名，以当前文件名作为组件名，若文件名为 index，则取上级文件夹名称。首字符大写，在所有组合是脚本和选项式脚本中都起作用
-- vite-plugin-vue-setup-extend 插件只能在 只有在组合式 script 中产生作用，若想同时与该插件使用，在 pluins 中先执行 vite-plugin-vue-setup-extend 插件实例，并且优先级高于vite-plugin-mixin-code插件中的name设置
-- 官方提供的自动加上name也是只针对只是组合式脚本的文件。与vite-plugin-mixin-code插件中的name设置共存关系。
+- ### 实现对指目录下的 vue 文件进行代码合并，
+  - 功能类似全局 mixin，但比 mixn 更强大。
+  - 可以通过指定具体文件/夹和排除指定文件/夹来实现合并
+  - 合并规则：以现有组件对象为主，并入的对象为辅， 相同函数合并成一个，并入的函数先执行。函数有返回值:若为对象则合并，结果都以组件内的函数结果为主
+  - 同时支持多个不同的匹配规则
+  - 文件筛选匹配格式 参考[micromatch](https://github.com/micromatch/micromatch)
+- ### 自动添加组件名
+  - 工程下的所有vue文件，以当前文件名作为组件名，若文件名为 index，则取上级文件夹名称。首字符大写，在所有组合是脚本和选项式脚本中都起作用
+  - vite-plugin-vue-setup-extend 插件只能在 只有在组合式 script 中产生作用，若想同时与该插件使用，在 pluins 中先执行 vite-plugin-vue-setup-extend 插件实例，并且优先级高于vite-plugin-mixin-code插件中的name设置
+  - 官方提供的自动加上name也是只针对只是组合式脚本的文件。与vite-plugin-mixin-code插件中的name为共存关系。即两个name都能用于组件自身递归
 
 # 参数
 
@@ -30,6 +31,7 @@ MixinOptionsType 可以是数组或对象，数组时可以适配多个不同匹
 ```javascript
   小程序开发，当需要将所有第三方组件设置成虚拟节点时。
   H5开发，当需要将某一类文件统一添加属性或方法时。
+  项目中统一自动加上组件name。
 ```
 
 # 使用方式
