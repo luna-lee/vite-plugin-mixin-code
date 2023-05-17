@@ -128,8 +128,7 @@ export default function mixinCodePlugin(
             });
           }
         } else {
-          const result = compileScript(descriptor, { id });
-          const s = result.content.replace(
+          const s = descriptor.script.content.replace(
             /(?<=(export\s+default\s*)).*(}|\))/gms,
             (match) => {
               if (/defineComponent\(/.test(match))
@@ -145,7 +144,7 @@ export default function mixinCodePlugin(
                                     `;
             }
           );
-          str().replace(result.content, s);
+          str().replace(descriptor.script.content, s);
         }
         return {
           map: str().generateMap(),
