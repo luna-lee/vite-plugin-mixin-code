@@ -6,7 +6,7 @@
   - 合并规则：以现有组件对象为主，并入的对象为辅， 相同函数合并成一个，并入的函数先执行。函数有返回值:若为对象则合并，结果都以组件内的函数结果为主
   - 同时支持多个不同的匹配规则
   - 文件筛选匹配格式 参考[micromatch](https://github.com/micromatch/micromatch)
-- ### 自动添加组件名
+- ### 自动添加大驼峰PascalCase命名方式的组件名
   - 工程下的所有vue文件，以当前文件名作为组件名，若文件名为 index，则取上级文件夹名称。首字符大写，在所有组合是脚本和选项式脚本中都起作用
   - vite-plugin-vue-setup-extend 插件只能在 只有在组合式 script 中产生作用，若想同时与该插件使用，在 pluins 中先执行 vite-plugin-vue-setup-extend 插件实例，并且优先级高于vite-plugin-mixin-code插件中的name设置
   - 官方提供的自动加上name也是只针对只是组合式脚本的文件。与vite-plugin-mixin-code插件中的name为共存关系。即两个name都能用于组件自身递归
