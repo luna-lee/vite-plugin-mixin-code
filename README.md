@@ -37,6 +37,8 @@ MixinOptionsType 可以是数组或对象，数组时可以适配多个不同匹
 # 使用方式
 
 ```javascript
+plugins.push( MixinCodePlugin())
+
 plugins.push(
   MixinCodePlugin(
     [

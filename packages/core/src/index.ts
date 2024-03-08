@@ -20,7 +20,7 @@ export interface ExtendOptionsType {
  * @description 默认正对整个项目中的vue文件
  */
 export default function mixinCodePlugin(
-  mixinOptions: MixinOptionsType[] | MixinOptionsType,
+  mixinOptions: MixinOptionsType[] | MixinOptionsType = [],
   extendOptions: ExtendOptionsType = {
     method: "merge",
     projectPath: process.cwd(),
