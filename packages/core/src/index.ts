@@ -42,9 +42,15 @@ export default function mixinCodePlugin(
       } else {
         componentName = pathArr[pathArr.length - 1].replace(".vue", "");
       }
+      //剔除左右符号，
+      const match = componentName.match(/([a-zA-Z0-9]).*([a-zA-Z0-9])/g);
+      if (match) {
+        componentName = match[0];
+      }
       // Pascal Case
-      componentName = componentName.replace(/(?:^|_+)([a-z])/g, (_, letter) =>
-        letter.toUpperCase()
+      componentName = componentName.replace(
+        /(?:^|[_-]+)([a-z])/g,
+        (_, letter) => letter.toUpperCase()
       );
       const projectPath = extendOptions.projectPath;
       let mixinCode = "";
