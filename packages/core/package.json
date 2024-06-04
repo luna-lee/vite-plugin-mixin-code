@@ -7,7 +7,8 @@
   "types": "./dist/index.d.ts",
   "homepage": "https://github.com/luna-lee/vite-plugin-mixin-code.git",
   "scripts": {
-    "build": "pnpm unbuild"
+    "build": "pnpm unbuild",
+    "publish": "npm publish"
   },
   "keywords": [],
   "author": "",
