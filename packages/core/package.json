@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-mixin-code",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
@@ -28,8 +28,5 @@
     "lodash-es": "^4.17.21",
     "magic-string": "^0.26.4",
     "micromatch": "^4.0.5"
-  },
-  "devDependencies": {
-    "vite": "^2.7.13"
   }
 }

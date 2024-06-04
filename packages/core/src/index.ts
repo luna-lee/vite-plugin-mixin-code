@@ -227,7 +227,51 @@ export default function mixinCodePlugin(
             }),
         };
       } else {
-        return null;
+        if (method == "mixin") {
+          str().appendLeft(
+            0,
+            `<script>
+                        import { defineComponent } from "vue";
+                        export default defineComponent({
+                            mixins:[
+                                ${mixinCode}
+                            ]
+                        });
+                        </script>\n
+                        `
+          );
+        } else {
+          str().appendLeft(
+            0,
+            `<script>
+                      import { defineComponent } from "vue";
+                        export default defineComponent(
+                            ${mixinCode}
+                        );
+                        </script>\n
+                        `
+          );
+        }
+        return {
+          map: str().generateMap(),
+          code: str()
+            .toString()
+            // 若代码中有VitePluginMixinCodeMergeObject,添加VitePluginMixinCodeMergeObject依赖
+            .replace(/export\s+default.*/gms, (match) => {
+              if (
+                /import\s+\{\s*mergeObject\s+as\s+VitePluginMixinCodeMergeObject\s*\}/gms.test(
+                  code
+                )
+              )
+                return match;
+              if (/VitePluginMixinCodeMergeObject/gms.test(match))
+                return `
+                            import { mergeObject as VitePluginMixinCodeMergeObject  } from "vite-plugin-mixin-code/dist/lib/index";\n
+                            ${match}
+                        `;
+              return match;
+            }),
+        };
       }
     },
   };
