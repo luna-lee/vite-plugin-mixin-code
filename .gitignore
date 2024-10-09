@@ -1,4 +1,4 @@
 node_modules
 dist
-packages/**/*.md
+packages/**/README.md
 packages/**/readme.md
