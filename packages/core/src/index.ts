@@ -1,5 +1,5 @@
 import { Plugin } from "vite";
-import { parse, compileScript } from "@vue/compiler-sfc";
+import { parse } from "@vue/compiler-sfc";
 import MagicString from "magic-string";
 const path = require("path");
 const micromatch = require("micromatch");
@@ -179,8 +179,7 @@ export default function mixinCodePlugin(
             }),
         };
       } else if (descriptor.scriptSetup) {
-        const result = compileScript(descriptor, { id });
-        const lang = result.attrs.lang;
+        const lang = descriptor.scriptSetup?.attrs?.lang;
         if (method == "mixin") {
           str().appendLeft(
             0,
