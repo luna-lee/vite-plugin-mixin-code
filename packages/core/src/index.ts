@@ -5,6 +5,7 @@ const path = require("path");
 const micromatch = require("micromatch");
 const absolutePath = (projectPath = process.cwd(), ...arg: any) =>
   path.resolve(projectPath, ...arg);
+
 export interface MixinOptionsType {
   mixinCode: string; //插入的代码。
   include?: string[]; //指定文件/夹 默认当前工程下所有vue文件
@@ -172,7 +173,7 @@ export default function mixinCodePlugin(
                 return match;
               if (/VitePluginMixinCodeMergeObject/gms.test(match))
                 return `
-                                import { mergeObject as VitePluginMixinCodeMergeObject  } from "vite-plugin-mixin-code/dist/lib/index";\n
+                                import { mergeObject as VitePluginMixinCodeMergeObject  } from "vite-plugin-mixin-code/dist/lib/index.mjs";\n
                                 ${match}
                             `;
               return match;
@@ -219,7 +220,7 @@ export default function mixinCodePlugin(
                 return match;
               if (/VitePluginMixinCodeMergeObject/gms.test(match))
                 return `
-                            import { mergeObject as VitePluginMixinCodeMergeObject  } from "vite-plugin-mixin-code/dist/lib/index";\n
+                            import { mergeObject as VitePluginMixinCodeMergeObject  } from "vite-plugin-mixin-code/dist/lib/index.mjs";\n
                             ${match}
                         `;
               return match;
@@ -265,7 +266,7 @@ export default function mixinCodePlugin(
                 return match;
               if (/VitePluginMixinCodeMergeObject/gms.test(match))
                 return `
-                            import { mergeObject as VitePluginMixinCodeMergeObject  } from "vite-plugin-mixin-code/dist/lib/index";\n
+                            import { mergeObject as VitePluginMixinCodeMergeObject  } from "vite-plugin-mixin-code/dist/lib/index.mjs";\n
                             ${match}
                         `;
               return match;
