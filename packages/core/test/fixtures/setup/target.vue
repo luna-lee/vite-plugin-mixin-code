@@ -1,10 +1,13 @@
 <script lang="ts">
 import { defineComponent } from "vue";
-export default defineComponent({ aa: "xx" });
+import { mergeObject as VitePluginMixinCodeMergeObject } from "vite-plugin-mixin-code/dist/lib/index.mjs";
+export default defineComponent(
+  VitePluginMixinCodeMergeObject({ name: 'Test' }, { aa: "xx" })
+);
 </script>
 <template>
   <div></div>
 </template>
 <script lang="ts" setup>
-const init = "";
+const m = "";
 </script>
